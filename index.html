@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcos Oyola - Desarrollador Frontend</title>
+    <link rel="icon" type="image/x-icon" href="imagen.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: #0a192f;
+            color: #8892b0;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+        }
+
+        main,
+        header,
+        footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        .glass {
+            background: rgba(17, 34, 64, 0.7);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(6px);
+            border-radius: 10px;
+            border: 1px solid rgba(100, 255, 218, 0.18);
+        }
+
+        section,
+        .project-card,
+        form {
+            transition: box-shadow 0.4s, background 0.4s;
+        }
+
+        section:hover,
+        .project-card:hover,
+        form:hover {
+            box-shadow: 0 8px 32px 0 rgba(100, 255, 218, 0.10);
+            background: rgba(17, 34, 64, 0.85);
+        }
+
+        .project-card {
+            cursor: pointer;
+            perspective: 800px;
+            will-change: transform;
+        }
+
+        .project-card.tilted,
+        .skill-item.tilted {
+            transition: transform 0.15s cubic-bezier(.68, -0.55, .27, 1.55), box-shadow 0.3s;
+            box-shadow: 0 12px 32px 0 #64ffda33, 0 2px 8px 0 rgba(100, 255, 218, 0.10);
+        }
+
+        .skill-item {
+            cursor: pointer;
+        }
+
+        .skill-item:active {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        header {
+            padding: 2rem;
+            text-align: center;
+            background-color: #020c1b;
+        }
+
+        /* Animación de entrada para el nombre */
+        .brand-anim {
+            width: 340px;
+            max-width: 100%;
+            display: inline-block;
+            white-space: nowrap;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: #64ffda;
+            font-weight: 900;
+            letter-spacing: 2px;
+            overflow: hidden;
+        }
+
+        /* Glow en los títulos */
+        h2,
+        h3 {
+            text-shadow:
+                0 2px 16px #64ffda99,
+                0 0 8px #64ffda55,
+                0 4px 32px #0a192f99;
+            filter: drop-shadow(0 6px 18px #64ffda33);
+        }
+
+        /* Borde animado en tarjetas de proyecto */
+        .project-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(120deg, #64ffda 0%, #0a192f 100%);
+            opacity: 0.2;
+            z-index: 0;
+            border-radius: 8px;
+            pointer-events: none;
+            animation: borderGlow 2.5s linear infinite alternate;
+        }
+
+        @keyframes borderGlow {
+            0% {
+                filter: blur(2px);
+                opacity: 0.15;
+            }
+
+            100% {
+                filter: blur(6px);
+                opacity: 0.35;
+            }
+        }
+
+        .project-card>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Animación de aparición de habilidades */
+        .skills-container {
+            animation: skillsFade 1.2s cubic-bezier(.68, -0.55, .27, 1.55);
+        }
+
+        @keyframes skillsFade {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) translateY(40px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* Botón de WhatsApp con pulso */
+        #whatsapp-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 #25D36655;
+            }
+
+            70% {
+                box-shadow: 0 0 0 12px #25D36600;
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 #25D36600;
+            }
+        }
+
+        #whatsapp-btn:hover {
+            background-color: #128C7E;
+        }
+
+        /* Separadores decorativos */
+        .divider {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #64ffda 0%, #0a192f 100%);
+            border-radius: 2px;
+            margin: 2rem auto 2.5rem auto;
+            opacity: 0.7;
+        }
+
+        /* Animación de entrada para el perfil */
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 2px solid #64ffda;
+            box-shadow: 0 4px 24px 0 rgba(100, 255, 218, 0.15);
+            transition: transform 0.4s;
+            animation: profilePop 1.2s cubic-bezier(.68, -0.55, .27, 1.55);
+        }
+
+        @keyframes profilePop {
+            0% {
+                opacity: 0;
+                transform: scale(0.7) rotate(-10deg);
+            }
+
+            80% {
+                opacity: 1;
+                transform: scale(1.1) rotate(2deg);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0);
+            }
+        }
+
+        .profile-img:hover {
+            transform: scale(1.08) rotate(-2deg);
+        }
+
+        nav {
+            margin-top: 1rem;
+        }
+
+        nav a {
+            color: #64ffda;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-size: 1.1rem;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        nav a::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #64ffda;
+            transition: width 0.3s;
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+        }
+
+        nav a:hover {
+            color: #fff;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            margin: 4rem 0;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #ccd6f6;
+            text-shadow:
+                0 2px 16px #64ffda99,
+                0 0 8px #64ffda55,
+                0 4px 32px #0a192f99;
+            filter: drop-shadow(0 6px 18px #64ffda33);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #64ffda;
+        }
+
+        /* SECCIÓN PROYECTOS MEJORADA */
+        #proyectos {
+            padding: 5rem 0;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+            padding: 0 2rem;
+        }
+
+        .project-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            background: #112240;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-image-container {
+            position: relative;
+            overflow: hidden;
+            height: 240px;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+        }
+
+        .project-content {
+            padding: 1.8rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-tech-stack {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin: 1.2rem 0;
+        }
+
+        .tech-badge {
+            background: rgba(100, 255, 218, 0.1);
+            color: #64ffda;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.8rem;
+            justify-content: flex-end;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .btn-demo {
+            background: linear-gradient(135deg, #64ffda 0%, #1976d2 100%);
+            color: #0a192f !important;
+        }
+
+        .btn-code {
+            background: rgba(100, 255, 218, 0.1);
+            color: #64ffda !important;
+            border: 1px solid #64ffda;
+        }
+
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(10, 25, 47, 0) 0%, #0a192f 90%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        .project-description {
+            color: #a8b2d1;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+                padding: 0;
+            }
+
+            .project-image-container {
+                height: 200px;
+            }
+
+            .project-content {
+                padding: 1.4rem;
+            }
+        }
+
+        /* FIN SECCIÓN PROYECTOS MEJORADA */
+
+        .hidden-section {
+            display: none;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .brand-anim {
+                width: 220px !important;
+                /* Ancho fijo para móvil */
+                height: 40px;
+                /* Altura fija para evitar saltos */
+                font-size: 1.6rem !important;
+                padding: 0.3rem 0;
+                border-right: 2px solid transparent;
+                /* Simular cursor sin afectar ancho */
+            }
+
+            /* Evitar que el texto desborde */
+            .brand-anim::after {
+                content: '';
+                display: inline-block;
+                width: 1px;
+                visibility: hidden;
+            }
+        }
+
+        #loader-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #0a192f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s;
+        }
+
+        #loader {
+            border: 8px solid #233554;
+            border-top: 8px solid #64ffda;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            animation: spinLoader 1s linear infinite;
+        }
+
+        @keyframes spinLoader {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        #loader-bg.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .section-transition {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.6s cubic-bezier(.68, -0.55, .27, 1.55), transform 0.6s cubic-bezier(.68, -0.55, .27, 1.55);
+        }
+
+        .section-transition.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 5px;
+            background: linear-gradient(90deg, #64ffda 0%, #1976d2 100%);
+            z-index: 9999;
+            transition: width 0.2s;
+        }
+
+        /* SECCIÓN SOBRE MÍ MEJORADA */
+        #inicio {
+            padding: 6rem 0 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-header {
+            text-align: left;
+            margin-bottom: 3rem;
+            position: relative;
+            padding-left: 2rem;
+            border-left: 4px solid #64ffda;
+        }
+
+        .about-title {
+            font-size: 3.2rem;
+            color: #ccd6f6;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .about-subtitle {
+            font-size: 1.8rem;
+            color: #8892b0;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            color: #a8b2d1;
+            line-height: 1.8;
+            padding-right: 2rem;
+            border-right: 2px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .about-highlights {
+            padding-left: 2rem;
+        }
+
+        .highlight-item {
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 2.5rem;
+        }
+
+        .highlight-icon {
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+            color: #64ffda;
+            font-size: 1.4rem;
+        }
+
+        .highlight-title {
+            color: #64ffda;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .highlight-text {
+            color: #8892b0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 1024px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .about-text {
+                border-right: none;
+                padding-right: 0;
+            }
+
+            .about-highlights {
+                padding-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .about-title {
+                font-size: 2.5rem;
+            }
+
+            .about-subtitle {
+                font-size: 1.4rem;
+            }
+
+            .about-header {
+                padding-left: 1rem;
+                margin-left: 1rem;
+            }
+        }
+
+        /* SECCIÓN HABILIDADES MEJORADA */
+        #habilidades {
+            padding: 5rem 0;
+            background: rgba(17, 34, 64, 0.95);
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .skill-card {
+            background: #112240;
+            border-radius: 12px;
+            padding: 2rem;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, #64ffda33, transparent);
+            transform: rotate(45deg);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .skill-card:hover::before {
+            opacity: 1;
+        }
+
+        .skill-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-icon {
+            font-size: 2.2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(100, 255, 218, 0.1);
+        }
+
+        .skill-title {
+            color: #ccd6f6;
+            font-size: 1.4rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .skill-category {
+            color: #64ffda;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .skill-progress {
+            height: 8px;
+            background: rgba(100, 255, 218, 0.1);
+            border-radius: 4px;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .skill-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #64ffda 0%, #1976d2 100%);
+            border-radius: 4px;
+            position: relative;
+            transition: width 1s ease;
+        }
+
+        .skill-description {
+            color: #8892b0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .skills-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+
+            .skill-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* SECCIÓN CONTACTO PROFESIONAL */
+        #contacto {
+            padding: 5rem 0;
+            background: rgba(17, 34, 64, 0.97);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .contact-info {
+            padding: 2rem;
+            background: rgba(100, 255, 218, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .contact-info-item {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            align-items: center;
+        }
+
+        .contact-icon {
+            font-size: 1.8rem;
+            color: #64ffda;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(100, 255, 218, 0.1);
+        }
+
+        .contact-info-content h3 {
+            color: #ccd6f6;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .contact-info-content p {
+            color: #8892b0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .contact-form {
+            position: relative;
+            padding: 2rem;
+            background: #0a192f;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(100, 255, 218, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            color: #64ffda;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            background: #112240;
+            border: 1px solid #233554;
+            color: #ccd6f6;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #64ffda;
+            box-shadow: 0 0 8px rgba(100, 255, 218, 0.2);
+        }
+
+        .form-textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #64ffda 0%, #1976d2 100%);
+            color: #0a192f;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 1024px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info {
+                order: 2;
+                margin-top: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .contact-container {
+                padding: 0 1rem;
+            }
+
+            .contact-info-item {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Botón de Instagram Mejorado y Animado */
+        #instagram-btn {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 6px 24px #d6249f55, 0 2px 8px #285AEB55;
+            background: transparent;
+            border: 3px solid #fff;
+            z-index: 100;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+            animation: ig-float 2.2s ease-in-out infinite alternate;
+        }
+
+        #instagram-btn:hover {
+            transform: scale(1.15) rotate(-8deg);
+            box-shadow: 0 12px 36px #d6249f99, 0 2px 8px #285AEB99;
+            border-color: #fd5949;
+        }
+
+        @keyframes ig-float {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+
+            100% {
+                transform: translateY(-8px) scale(1.07);
+            }
+        }
+
+        #instagram-btn svg {
+            width: 44px;
+            height: 44px;
+            display: block;
+        }
+    </style>
+    <div id="scroll-progress"></div>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+</head>
+
+<body>
+    <div id="loader-bg">
+        <div id="loader"></div>
+    </div>
+    <div id="particles-js"></div>
+    <header>
+        <img src="foto de perfil.jpg" alt="Marcos Oyola" class="profile-img">
+        <div class="brand-anim" id="brand-anim"
+            style="width:340px;max-width:100%;display:inline-block;white-space:nowrap;text-align:center;font-size:2.8rem;color:#64ffda;font-weight:900;letter-spacing:2px;overflow:hidden;">
+        </div>
+        <nav>
+            <a href="#inicio">Inicio</a>
+            <a href="#proyectos">Proyectos</a>
+            <a href="#habilidades">Habilidades</a>
+            <a href="#contacto">Contacto</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="inicio">
+            <div class="about-header">
+                <h1 class="about-title">Desarrollador Frontend</h1>
+                <h2 class="about-subtitle">Construyendo el futuro digital en grande</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Soy Marcos Oyola, desarrollador frontend apasionado por la tecnología y la programación. Me
+                        especializo en crear aplicaciones web modernas, funcionales y atractivas. Disfruto aprender
+                        nuevas herramientas y lenguajes, y siempre busco mejorar mis habilidades para ofrecer soluciones
+                        innovadoras. Me considero una persona responsable, creativa y con gran capacidad de adaptación a
+                        nuevos retos.</p>
+                    <p>Actualmente me encuentro en mis primeros pasos en el mundo del desarrollo, aprendiendo y
+                        creciendo cada día. Mi enfoque combina el diseño cuidadoso de interfaces de usuario con el deseo
+                        de crear soluciones útiles y modernas para los usuarios.</p>
+                </div>
+                <div class="about-highlights">
+                    <div class="highlight-item">
+                        <i class="fas fa-rocket highlight-icon"></i>
+                        <div class="highlight-title">Innovación Tecnológica</div>
+                        <div class="highlight-text">Implementación de las últimas tecnologías para soluciones de
+                            vanguardia</div>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-shield-alt highlight-icon"></i>
+                        <div class="highlight-title">Desarrollo Seguro</div>
+                        <div class="highlight-text">Prácticas de codificación segura y protección de datos</div>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-mobile-alt highlight-icon"></i>
+                        <div class="highlight-title">Enfoque Mobile-First</div>
+                        <div class="highlight-text">Diseños responsivos optimizados para todos los dispositivos</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="proyectos">
+            <h2>Proyectos Destacados</h2>
+            <div class="divider"></div>
+            <p class="section-subtitle">Implementaciones técnicas con soluciones innovadoras</p>
+            <div class="projects-grid">
+                <!-- Proyecto 1 - Suscripciones -->
+                <div class="project-card">
+                    <div class="project-overlay"></div>
+                    <div class="project-image-container">
+                        <img src="Captura de pantalla 2025-04-29 150853.png" alt="Sistema de Suscripciones"
+                            class="project-image">
+                    </div>
+                    <div class="project-content">
+                        <h3>Sistema de Gestión de Suscripciones</h3>
+                        <div class="project-tech-stack">
+                            <span class="tech-badge">HTML5</span>
+                            <span class="tech-badge">CSS3</span>
+                            <span class="tech-badge">JavaScript</span>
+                            <span class="tech-badge">API REST</span>
+                        </div>
+                        <p class="project-description">
+                            Plataforma completa para gestión de pagos recurrentes con integración de gateway de pagos,
+                            panel administrativo y generación automatizada de facturas.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://pepsi200.github.io/pago-de-suscripcion/" target="_blank"
+                                class="project-link btn-demo">
+                                <i class="fas fa-external-link-alt"></i>Demo
+                            </a>
+                            <a href="https://github.com/Pepsi200/pago-de-suscripcion" target="_blank"
+                                class="project-link btn-code">
+                                <i class="fab fa-github"></i>Código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Proyecto 2 - Tienda Ropa -->
+                <div class="project-card">
+                    <div class="project-overlay"></div>
+                    <div class="project-image-container">
+                        <img src="ROPA.png" alt="E-commerce Moda" class="project-image">
+                    </div>
+                    <div class="project-content">
+                        <h3>Plataforma E-commerce de Moda</h3>
+                        <div class="project-tech-stack">
+                            <span class="tech-badge">HTML5</span>
+                            <span class="tech-badge">CSS Grid</span>
+                            <span class="tech-badge">JavaScript ES6</span>
+                            <span class="tech-badge">LocalStorage</span>
+                        </div>
+                        <p class="project-description">
+                            Solución completa de comercio electrónico con carrito de compras persistente,
+                            sistema de filtrado avanzado y diseño responsive adaptado a móviles.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://pepsi200.github.io/ropas/" target="_blank" class="project-link btn-demo">
+                                <i class="fas fa-external-link-alt"></i>Demo
+                            </a>
+                            <a href="https://github.com/Pepsi200/ropas" target="_blank" class="project-link btn-code">
+                                <i class="fab fa-github"></i>Código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Proyecto 3 - Comidas -->
+                <div class="project-card">
+                    <div class="project-overlay"></div>
+                    <div class="project-image-container">
+                        <img src="comida.png" alt="Gestor de Menús" class="project-image">
+                    </div>
+                    <div class="project-content">
+                        <h3>Sistema de Gestión de Menús</h3>
+                        <div class="project-tech-stack">
+                            <span class="tech-badge">HTML5</span>
+                            <span class="tech-badge">CSS Flexbox</span>
+                            <span class="tech-badge">JavaScript</span>
+                            <span class="tech-badge">JSON API</span>
+                        </div>
+                        <p class="project-description">
+                            Aplicación web interactiva para gestión de menús digitales con búsqueda en tiempo real,
+                            categorización dinámica y sistema de favoritos.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://pepsi200.github.io/comidas/" target="_blank" class="project-link btn-demo">
+                                <i class="fas fa-external-link-alt"></i>Demo
+                            </a>
+                            <a href="https://github.com/Pepsi200/comidas" target="_blank" class="project-link btn-code">
+                                <i class="fab fa-github"></i>Código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Proyecto 4 - Juego -->
+                <div class="project-card">
+                    <div class="project-overlay"></div>
+                    <div class="project-image-container">
+                        <img src="juego.png" alt="Juego Interactivo" class="project-image">
+                    </div>
+                    <div class="project-content">
+                        <h3>Plataforma de Juegos Interactivos</h3>
+                        <div class="project-tech-stack">
+                            <span class="tech-badge">HTML5 Canvas</span>
+                            <span class="tech-badge">CSS Animations</span>
+                            <span class="tech-badge">JavaScript</span>
+                            <span class="tech-badge">Web Audio API</span>
+                        </div>
+                        <p class="project-description">
+                            Módulo de juegos interactivos con motor de física personalizado,
+                            sistema de puntuaciones y efectos de sonido integrados.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://pepsi200.github.io/juego-de-moneda/" target="_blank"
+                                class="project-link btn-demo">
+                                <i class="fas fa-external-link-alt"></i>Demo
+                            </a>
+                            <a href="https://github.com/Pepsi200/juego-de-moneda" target="_blank"
+                                class="project-link btn-code">
+                                <i class="fab fa-github"></i>Código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Proyecto 5 - Clima -->
+                <div class="project-card">
+                    <div class="project-overlay"></div>
+                    <div class="project-image-container">
+                        <img src="clima.png" alt="Portada App del Clima" class="project-image">
+                    </div>
+                    <div class="project-content">
+                        <h3>App del Clima en Tiempo Real</h3>
+                        <div class="project-tech-stack">
+                            <span class="tech-badge">HTML5</span>
+                            <span class="tech-badge">CSS3</span>
+                            <span class="tech-badge">JavaScript</span>
+                            <span class="tech-badge">API Meteorológica</span>
+                        </div>
+                        <p class="project-description">
+                            Aplicación web que muestra el clima actual de cualquier ciudad consultando una API
+                            meteorológica. Permite búsqueda dinámica, muestra temperatura, condiciones y datos
+                            relevantes en una interfaz moderna y responsive.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://pepsi200.github.io/clima/" target="_blank" class="project-link btn-demo">
+                                <i class="fas fa-external-link-alt"></i>Demo
+                            </a>
+                            <a href="https://github.com/Pepsi200/clima" target="_blank" class="project-link btn-code">
+                                <i class="fab fa-github"></i>Código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Proyecto 6 - Lector QR -->
+                <div class="project-card">
+                    <div class="project-overlay"></div>
+                    <div class="project-image-container">
+                        <img src="Captura de pantalla 2025-05-03 164424.png" alt="Lector QR" class="project-image">
+                    </div>
+                    <div class="project-content">
+                        <h3>Lector de Códigos QR</h3>
+                        <div class="project-tech-stack">
+                            <span class="tech-badge">HTML5</span>
+                            <span class="tech-badge">CSS3</span>
+                            <span class="tech-badge">JavaScript</span>
+                            <span class="tech-badge">API de Cámara</span>
+                        </div>
+                        <p class="project-description">
+                            Aplicación web que permite escanear códigos QR usando la cámara del dispositivo. Procesa la
+                            imagen en tiempo real y muestra el contenido del código de manera rápida y sencilla.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://pepsi200.github.io/lector-QR/" target="_blank"
+                                class="project-link btn-demo">
+                                <i class="fas fa-external-link-alt"></i>Demo
+                            </a>
+                            <a href="https://github.com/Pepsi200/lector-QR" target="_blank"
+                                class="project-link btn-code">
+                                <i class="fab fa-github"></i>Código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Proyecto 7 - Portafolio Personal -->
+                <div class="project-card">
+                    <div class="project-overlay"></div>
+                    <div class="project-image-container">
+                        <img src="foto de perfil.jpg" alt="Portafolio Personal" class="project-image">
+                    </div>
+                    <div class="project-content">
+                        <h3>Portafolio Personal</h3>
+                        <div class="project-tech-stack">
+                            <span class="tech-badge">HTML5</span>
+                            <span class="tech-badge">CSS3</span>
+                            <span class="tech-badge">JavaScript</span>
+                            <span class="tech-badge">Responsive Design</span>
+                        </div>
+                        <p class="project-description">
+                            Este mismo portafolio web que estás visitando. Diseñado y desarrollado desde cero para
+                            mostrar mis proyectos y habilidades como desarrollador frontend. Incluye diseño responsive,
+                            animaciones suaves y una interfaz de usuario intuitiva.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://pepsi200.github.io/portafolio/" target="_blank"
+                                class="project-link btn-demo">
+                                <i class="fas fa-external-link-alt"></i>Demo
+                            </a>
+                            <a href="https://github.com/Pepsi200/portafolio" target="_blank"
+                                class="project-link btn-code">
+                                <i class="fab fa-github"></i>Código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Proyecto 8 - Carta Digital con QR -->
+                <div class="project-card">
+                    <div class="project-overlay"></div>
+                    <div class="project-image-container">
+                        <img src="carta digital.jpeg" alt="Carta Digital con QR" class="project-image">
+                    </div>
+                    <div class="project-content">
+                        <h3>Carta Digital con Código QR</h3>
+                        <div class="project-tech-stack">
+                            <span class="tech-badge">HTML5</span>
+                            <span class="tech-badge">CSS3</span>
+                            <span class="tech-badge">JavaScript</span>
+                            <span class="tech-badge">Integración QR</span>
+                        </div>
+                        <p class="project-description">
+                            Sistema de carta digital para restaurantes accesible mediante código QR. Los clientes pueden
+                            visualizar el menú completo desde sus dispositivos móviles, mejorando la experiencia y
+                            facilitando la actualización de platos y precios en tiempo real.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://pepsi200.github.io/carta-digital/" target="_blank"
+                                class="project-link btn-demo">
+                                <i class="fas fa-external-link-alt"></i>Demo
+                            </a>
+                            <a href="https://github.com/Pepsi200/carta-digital" target="_blank"
+                                class="project-link btn-code">
+                                <i class="fab fa-github"></i>Código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Proyecto 9 - Landing Page -->
+                <div class="project-card">
+                    <div class="project-overlay"></div>
+                    <div class="project-image-container">
+                        <img src="hero para vape shop.jpg" alt="Landing Page" class="project-image">
+                    </div>
+                    <div class="project-content">
+                        <h3>Landing Page Profesional</h3>
+                        <div class="project-tech-stack">
+                            <span class="tech-badge">HTML5</span>
+                            <span class="tech-badge">CSS3</span>
+                            <span class="tech-badge">JavaScript</span>
+                            <span class="tech-badge">Responsive Design</span>
+                        </div>
+                        <p class="project-description">
+                            Página de aterrizaje moderna y atractiva diseñada para convertir visitantes en clientes.
+                            Con diseño responsive, animaciones suaves y optimización para velocidad de carga,
+                            esta landing page es perfecta para campañas de marketing digital.
+                        </p>
+                        <div class="project-links">
+                            <a href="https://pepsi200.github.io/landig-pagee/" target="_blank"
+                                class="project-link btn-demo">
+                                <i class="fas fa-external-link-alt"></i>Demo
+                            </a>
+                            <a href="https://github.com/Pepsi200/landig-pagee" target="_blank"
+                                class="project-link btn-code">
+                                <i class="fab fa-github"></i>Código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="habilidades">
+            <h2>Stack Tecnológico</h2>
+            <div class="divider"></div>
+            <p class="section-subtitle">Herramientas y tecnologías que utilizo para crear soluciones digitales</p>
+            <div class="skills-container">
+                <!-- Frontend -->
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">
+                            <i class="fab fa-html5"></i>
+                        </div>
+                        <div>
+                            <h3 class="skill-title">Desarrollo Frontend</h3>
+                            <span class="skill-category">Interfaces de usuario</span>
+                        </div>
+                    </div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" style="width: 100%"></div>
+                    </div>
+                    <p class="skill-description">
+                        Creación de interfaces modernas y responsivas usando:
+                        <strong>HTML5</strong>, <strong>CSS3</strong>, y <strong>JavaScript</strong>.
+                        Diseño de componentes reutilizables, optimización de rendimiento y experiencia de usuario al
+                        máximo nivel.
+                    </p>
+                </div>
+                <!-- Backend Básico -->
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">
+                            <i class="fab fa-node"></i>
+                        </div>
+                        <div>
+                            <h3 class="skill-title">Backend Básico</h3>
+                            <span class="skill-category">Lógica de servidor simple</span>
+                        </div>
+                    </div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" style="width: 40%"></div>
+                    </div>
+                    <p class="skill-description">
+                        Conocimientos básicos en Node.js para crear APIs sencillas y conectar aplicaciones frontend con
+                        servicios externos.
+                    </p>
+                </div>
+                <!-- Gestión de Datos Básico -->
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div>
+                            <h3 class="skill-title">Gestión de Datos Básico</h3>
+                            <span class="skill-category">Almacenamiento simple</span>
+                        </div>
+                    </div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" style="width: 40%"></div>
+                    </div>
+                    <p class="skill-description">
+                        Manejo básico de bases de datos y almacenamiento de información para proyectos sencillos.
+                    </p>
+                </div>
+                <!-- Herramientas -->
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div>
+                            <h3 class="skill-title">Herramientas</h3>
+                            <span class="skill-category">Ecosistema de desarrollo</span>
+                        </div>
+                    </div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" style="width: 100%"></div>
+                    </div>
+                    <p class="skill-description">
+                        Dominio de herramientas modernas: control de versiones con Git, despliegues en la nube, Webpack,
+                        Postman y más para optimizar el flujo de trabajo y la calidad del software.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contacto">
+            <h2>Contacto Profesional</h2>
+            <div class="divider"></div>
+            <p class="section-subtitle">Transformemos tus ideas en soluciones digitales</p>
+            <div class="contact-container">
+                <!-- Formulario -->
+                <form class="contact-form" action="https://formsubmit.co/marcosoyola256@gmail.com" method="POST">
+                    <div class="form-group">
+                        <label class="form-label" for="name">Nombre Completo</label>
+                        <input class="form-input" type="text" id="name" name="name" required
+                            placeholder="Ej: Juan Pérez">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="email">Correo Electrónico</label>
+                        <input class="form-input" type="email" id="email" name="email" required
+                            placeholder="tucorre@ejemplo.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="message">Mensaje</label>
+                        <textarea class="form-input form-textarea" id="message" name="message" required
+                            placeholder="Describe tu proyecto o consulta..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Enviar Mensaje
+                    </button>
+                </form>
+                <!-- Información de Contacto -->
+                <div class="contact-info">
+                    <div class="contact-info-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-info-content">
+                            <h3>Ubicación</h3>
+                            <p>Córdoba, Argentina<br>Remoto Global</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-info-content">
+                            <h3>Correo Electrónico</h3>
+                            <p>marcosoyola256@gmail.com<br>Respuesta en 24h</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="contact-info-content">
+                            <h3>Teléfono</h3>
+                            <p>+54 3544 634488<br>Disponible full time</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Marcos Oyola. Todos los derechos reservados.</p>
+        <div style="margin-top: 1rem;">
+            <a href="https://github.com/Pepsi200" target="_blank" style="color: #64ffda; margin: 0 1rem;">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/developer-marcos-oyola-27b43a361/" target="_blank"
+                style="color: #64ffda; margin: 0 1rem;">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        </div>
+    </footer>
+
+    <!-- Botón de Instagram Mejorado y Animado -->
+    <a href="https://www.instagram.com/marcos_desarrollo" target="_blank" id="instagram-btn" title="Instagram">
+        <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <radialGradient id="ig-gradient" cx="50%" cy="50%" r="80%">
+                    <stop offset="0%" stop-color="#fdf497" />
+                    <stop offset="45%" stop-color="#fd5949" />
+                    <stop offset="60%" stop-color="#d6249f" />
+                    <stop offset="100%" stop-color="#285AEB" />
+                </radialGradient>
+            </defs>
+            <circle cx="19" cy="19" r="18" fill="url(#ig-gradient)" />
+            <path
+                d="M26 13.5C26 12.1193 24.8807 11 23.5 11H14.5C13.1193 11 12 12.1193 12 13.5V22.5C12 23.8807 13.1193 25 14.5 25H23.5C24.8807 25 26 23.8807 26 22.5V13.5Z"
+                stroke="white" stroke-width="2" />
+            <circle cx="19" cy="18.5" r="3.5" stroke="white" stroke-width="2" />
+            <circle cx="24.2" cy="13.8" r="0.8" fill="white" />
+        </svg>
+    </a>
+    <style>
+        #instagram-btn {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 6px 24px #d6249f55, 0 2px 8px #285AEB55;
+            background: transparent;
+            border: 3px solid #fff;
+            z-index: 100;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+            animation: ig-float 2.2s ease-in-out infinite alternate;
+        }
+
+        #instagram-btn:hover {
+            transform: scale(1.15) rotate(-8deg);
+            box-shadow: 0 12px 36px #d6249f99, 0 2px 8px #285AEB99;
+            border-color: #fd5949;
+        }
+
+        @keyframes ig-float {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+
+            100% {
+                transform: translateY(-8px) scale(1.07);
+            }
+        }
+
+        #instagram-btn svg {
+            width: 44px;
+            height: 44px;
+            display: block;
+        }
+    </style>
+
+    <script>
+        // Agregar smooth scrolling y mostrar solo la sección seleccionada
+        // Animación fade-in para las secciones
+        function animarSeccion(id) {
+            const sec = document.getElementById(id);
+            if (sec) {
+                sec.classList.remove('fade-in');
+                void sec.offsetWidth; // trigger reflow
+                sec.classList.add('fade-in');
+            }
+        }
+
+        function mostrarSeccion(id) {
+            document.querySelectorAll('main > section').forEach(sec => {
+                if (sec.id === id) {
+                    sec.classList.remove('hidden-section');
+                    animarSeccion(id);
+                } else {
+                    sec.classList.add('hidden-section');
+                }
+            });
+        }
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const id = this.getAttribute('href').replace('#', '');
+                mostrarSeccion(id);
+                window.location.hash = id;
+            });
+        });
+        // Animar la sección visible al cargar
+        window.addEventListener('DOMContentLoaded', () => {
+            let hash = window.location.hash.replace('#', '');
+            if (!hash || !document.getElementById(hash)) hash = 'inicio';
+            mostrarSeccion(hash);
+            animarSeccion(hash);
+            const brand = document.getElementById('brand-anim');
+            if (brand) {
+                // Efecto máquina de escribir infinito con borrado
+                const text = 'Marcos Oyola';
+                let i = 0;
+                let isDeleting = false;
+                function typeLoop() {
+                    if (!isDeleting) {
+                        brand.innerHTML = text.substring(0, i);
+                        if (i < text.length) {
+                            i++;
+                            setTimeout(typeLoop, 110);
+                        } else {
+                            isDeleting = true;
+                            setTimeout(typeLoop, 1200);
+                        }
+                    } else {
+                        brand.innerHTML = text.substring(0, i);
+                        if (i > 0) {
+                            i--;
+                            setTimeout(typeLoop, 60);
+                        } else {
+                            isDeleting = false;
+                            setTimeout(typeLoop, 500);
+                        }
+                    }
+                }
+                typeLoop();
+            }
+            // Animación de entrada individual para cada tarjeta de proyecto
+            const cards = document.querySelectorAll('.project-card');
+            cards.forEach((card, i) => {
+                card.style.animationDelay = (i * 0.25) + 's';
+            });
+        });
+
+        // Inicializar partículas
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 60, density: { enable: true, value_area: 800 } },
+                color: { value: '#64ffda' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.3, random: true },
+                size: { value: 4, random: true },
+                line_linked: { enable: true, distance: 150, color: '#64ffda', opacity: 0.2, width: 1 },
+                move: { enable: true, speed: 2, direction: 'none', random: false, straight: false, out_mode: 'out' }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: { enable: true, mode: 'repulse' },
+                    onclick: { enable: true, mode: 'push' },
+                    resize: true
+                },
+                modes: {
+                    repulse: { distance: 100, duration: 0.4 },
+                    push: { particles_nb: 4 }
+                }
+            },
+            retina_detect: true
+        });
+
+        // Animaciones de ScrollReveal para secciones
+        ScrollReveal().reveal('section', {
+            distance: '60px',
+            duration: 1200,
+            easing: 'cubic-bezier(.68,-0.55,.27,1.55)',
+            origin: 'bottom',
+            interval: 200,
+            reset: false
+        });
+
+        // Loader animado al cargar la página
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader-bg').classList.add('hide');
+            }, 600);
+        });
+
+        // Barra de progreso de scroll
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.getElementById('scroll-progress');
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = (scrollTop / docHeight) * 100;
+            scrollProgress.style.width = scrolled + '%';
+        });
+
+        // Efecto 3D Parallax en tarjetas de proyectos y habilidades
+        function add3DTiltEffect(selector) {
+            document.querySelectorAll(selector).forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * 10;
+                    const rotateY = ((x - centerX) / centerX) * 10;
+                    card.style.transform = `rotateX(${-rotateX}deg) rotateY(${rotateY}deg) scale3d(1.04,1.04,1.04)`;
+                    card.classList.add('tilted');
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = '';
+                    card.classList.remove('tilted');
+                });
+            });
+        }
+        window.addEventListener('DOMContentLoaded', () => {
+            add3DTiltEffect('.project-card');
+            add3DTiltEffect('.skill-item');
+        });
+    </script>
+</body>
+
+</html>
